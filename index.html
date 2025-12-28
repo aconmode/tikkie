@@ -8,17 +8,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <style>
+        /* --- EASY EDIT SECTION: ADJUST THESE VALUES TO CHANGE THE LOOK --- */
         :root {
-            --bg-color: #2e2e6b; /* Classic Tikkie Navy */
-            --card-bg: #6c6ccf; /* Classic Tikkie Indigo */
+            --title-weight: 700;         /* Weight of "Spotify betaling" (e.g., 400, 600, 800) */
+            --title-kerning: 0.8px;      /* Spacing between letters in the title */
+            
+            --amount-size: 60px;         /* Size of the € 0,00 text */
+            --amount-weight: 600;        /* Weight of the € 0,00 text */
+            --amount-kerning: -1.5px;      /* Spacing between numbers in the amount */
+            
+            /* General Branding Colors */
+            --bg-color: #2e2e6b; 
+            --card-bg: #6c6ccf; 
             --text-white: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.7);
-            --button-bg: #4c4c9e; /* Darker button for contrast */
+            --button-bg: #4c4c9e; 
             --border-color: rgba(255, 255, 255, 0.15);
             --pill-bg: #ffffff;
             --pill-text: #555555;
             --check-green: #4ccb7a;
         }
+        /* ------------------------------------------------------------------ */
 
         * {
             box-sizing: border-box;
@@ -73,9 +83,9 @@
 
         .title {
             font-size: 28px;
-            font-weight: 800;
+            font-weight: var(--title-weight);
             margin: 0 0 4px 0;
-            letter-spacing: -0.8px;
+            letter-spacing: var(--title-kerning);
         }
 
         .recipient-row {
@@ -113,9 +123,9 @@
             align-items: baseline;
             gap: 6px;
             margin: 20px 0 32px 0;
-            font-size: 68px;
-            font-weight: 700;
-            letter-spacing: -2.5px;
+            font-size: var(--amount-size);
+            font-weight: var(--amount-weight);
+            letter-spacing: var(--amount-kerning);
         }
 
         .currency-symbol {
