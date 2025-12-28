@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Spotify</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #2e2e6b; /* Classic Tikkie Navy */
+            --card-bg: #6c6ccf; /* Classic Tikkie Indigo */
+            --text-white: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --button-bg: #4c4c9e; /* Darker button for contrast */
+            --border-color: rgba(255, 255, 255, 0.15);
+            --pill-bg: #ffffff;
+            --pill-text: #555555;
+            --check-green: #4ccb7a;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            margin: 0;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Top Header Logo Area */
+        .pay-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 28px;
+            justify-content: center;
+            opacity: 0.9;
+        }
+
+        /* Payment Card */
+        .payment-card {
+            background-color: var(--card-bg);
+            width: 100%;
+            border-radius: 16px;
+            padding: 32px 28px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 4px 0;
+            letter-spacing: -0.8px;
+        }
+
+        .recipient-row {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .verified-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        .check-icon {
+            background-color: var(--check-green);
+            color: white;
+            font-size: 9px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Amount Input Area */
+        .amount-display-container {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin: 20px 0 32px 0;
+            font-size: 68px;
+            font-weight: 700;
+            letter-spacing: -2.5px;
+        }
+
+        .currency-symbol {
+            color: white;
+            opacity: 1;
+        }
+
+        #amount-input {
+            outline: none;
+            min-width: 40px;
+            caret-color: white;
+            color: white;
+        }
+
+        #amount-input.placeholder {
+            opacity: 0.55;
+        }
+
+        .input-pill {
+            background-color: var(--pill-bg);
+            color: var(--pill-text);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .pay-button {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 100px;
+            font-size: 19px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pay-button:active {
+            transform: scale(0.96);
+            background-color: #3e3e82;
+        }
+
+        .terms {
+            margin-top: 28px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .terms a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Warning Page */
+        .warning-card {
+            background-color: var(--card-bg);
+            width: 100%;
+            border-radius: 16px;
+            padding: 56px 28px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .warning-text {
+            font-size: 34px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-top: 24px;
+            margin-bottom: 36px;
+            letter-spacing: -1px;
+        }
+
+        /* FAQ Section */
+        .faq-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            margin-top: 48px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .chevron {
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(-45deg);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Text-only Header -->
+        <div class="pay-header">
+            <span>Pay with tikkie</span>
+        </div>
+
+        <div id="payment-view">
+            <div class="payment-card">
+                <h1 class="title">Spotify betaling</h1>
+                <span class="recipient-row">To Dinos</span>
+                <div class="verified-row">
+                    Karafillakis <span class="check-icon">✓</span>
+                </div>
+                
+                <div class="amount-display-container">
+                    <span class="currency-symbol">€</span>
+                    <span id="amount-input" 
+                          class="placeholder" 
+                          contenteditable="true" 
+                          inputmode="decimal"
+                          spellcheck="false">0,00</span>
+                </div>
+
+                <div class="input-pill" onclick="document.getElementById('amount-input').focus()">
+                    <span>☝️</span> Enter the amount yourself
+                </div>
+
+                <button class="pay-button" onclick="goToWarning()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                    Pay now
+                </button>
+
+                <div class="terms">
+                    By using this service, you accept the<br>
+                    <a href="#">Terms of use</a>
+                </div>
+            </div>
+
+            <div class="faq-title">Any questions?</div>
+            <div class="faq-list">
+                <div class="faq-item"><span>How does this work?</span><div class="chevron"></div></div>
+                <div class="faq-item"><span>Is this service for everyone?</span><div class="chevron"></div></div>
+                <div class="faq-item"><span>Is this secure?</span><div class="chevron"></div></div>
+            </div>
+        </div>
+
+        <div id="warning-view" class="hidden">
+            <div class="warning-card">
+                <span style="font-size: 56px;">🔍</span>
+                <div class="warning-text">Altijd dubbelchecken op linkjes, want deze is fake</div>
+                <button onclick="goToPayment()" style="background:rgba(255,255,255,0.1); border:none; color:white; padding: 12px 24px; border-radius: 50px; font-weight:600; cursor:pointer;">Terug naar betaling</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const amountInput = document.getElementById('amount-input');
+
+        amountInput.addEventListener('focus', function() {
+            if (this.innerText === '0,00') {
+                this.innerText = '';
+                this.classList.remove('placeholder');
+            }
+        });
+
+        amountInput.addEventListener('blur', function() {
+            if (this.innerText.trim() === '') {
+                this.innerText = '0,00';
+                this.classList.add('placeholder');
+            } else {
+                let val = this.innerText.replace(',', '.');
+                let num = parseFloat(val);
+                if (!isNaN(num)) {
+                    this.innerText = num.toFixed(2).replace('.', ',');
+                }
+            }
+        });
+
+        amountInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.blur();
+            }
+        });
+
+        function goToWarning() {
+            document.getElementById('payment-view').classList.add('hidden');
+            document.getElementById('warning-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function goToPayment() {
+            document.getElementById('warning-view').classList.add('hidden');
+            document.getElementById('payment-view').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
